@@ -1,7 +1,10 @@
 package prueba.demoPrueba.Servicios;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import prueba.demoPrueba.Entidades.Autor;
 import prueba.demoPrueba.Repositorios.AutorRepositorio;
 
@@ -13,7 +16,9 @@ public class ServiciosAutor {
                 por lo tanto no hace falta inicializar la variable para operar con ellla 
                 SE LO CONOCE COMO INYECCION DE DEPENDENCIA  */
     AutorRepositorio autorRepositorio;
-    
+    @Transactional /* todos los metodos que generen modificaciones en la base de datos
+                    deben establecerse como TRANSACTIONAL  esto es asi porque en caso de 
+                    generar algun error*/    
     public void crearAutor(String nombre){
         
         Autor autor= new Autor();
@@ -22,6 +27,11 @@ public class ServiciosAutor {
         
         autorRepositorio.save(autor);
         
+    }
+    public List<Autor> listarAutores(){
+        List<Autor> autores = new ArrayList();
+        autores = autorRepositorio.findAll();
+        return autores;
     }
     
 }
