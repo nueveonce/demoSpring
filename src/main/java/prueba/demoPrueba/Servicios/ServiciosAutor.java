@@ -2,11 +2,13 @@ package prueba.demoPrueba.Servicios;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prueba.demoPrueba.Entidades.Autor;
 import prueba.demoPrueba.Repositorios.AutorRepositorio;
+
 
 @Service
 public class ServiciosAutor { 
@@ -34,4 +36,17 @@ public class ServiciosAutor {
         return autores;
     }
     
+    public void modificarAutor(String nombre, String id){
+        Optional<Autor> respuestaAutor = autorRepositorio.findById(id);
+        
+        if (respuestaAutor.isPresent()) {
+            
+            Autor autor= respuestaAutor.get();
+            
+            autor.setNombre(nombre);
+            
+            autorRepositorio.save(autor);
+        }
+    }
+            
 }
